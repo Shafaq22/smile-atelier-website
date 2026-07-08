@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@font-face { font-family: "SiteDisplay"; src: url("/fonts/display-500.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "SiteDisplay"; src: url("/fonts/display-700.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "SiteDisplay"; src: url("/fonts/display-800.woff2") format("woff2");
+  font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "SiteBody"; src: url("/fonts/body-400.woff2") format("woff2");
+  font-weight: 400 600; font-style: normal; font-display: swap; }
+
+@theme {
+  --color-siteground: #070B14;
+  --color-sitesurface: #0F1626;
+  --color-siteink: #E6EDFA;
+  --color-sitemuted: #8996B2;
+  --color-siteaccent: #C8A96A;
+  --font-display: "SiteDisplay", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "SiteBody", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Custom styles and animations */
+.sx-hairline { border-color: color-mix(in srgb, var(--color-siteink) 14%, transparent); }
+.sx-wash { background-color: color-mix(in srgb, var(--color-siteaccent) 7%, transparent); }
+::selection { background: color-mix(in srgb, var(--color-siteaccent) 20%, transparent); }
+
+@keyframes sx-rise { from { transform: translateY(0.55em); opacity: 0; } to { transform: none; opacity: 1; } }
+.sx-rise { animation: sx-rise 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+@media (prefers-reduced-motion: reduce) { .sx-rise { animation: none; } }
+
+/* Theme override */
+html { background-color: #070B14 !important; color-scheme: dark !important; scroll-behavior: smooth; }
+body { background-color: #070B14 !important; color: #E6EDFA !important; margin: 0; }
+
+/* Floating Gold Dust Particles */
+@keyframes float-dust {
+  0% { transform: translateY(0vh) translateX(0px) scale(0.8); opacity: 0; }
+  15% { opacity: 0.6; }
+  85% { opacity: 0.6; }
+  100% { transform: translateY(-80vh) translateX(40px) scale(1.2); opacity: 0; }
+}
+.sx-dust {
+  animation: float-dust 18s infinite linear;
+}
