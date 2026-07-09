@@ -145,7 +145,7 @@ export default function App() {
 
     gsap.registerPlugin(ScrollTrigger);
     const FRAME_COUNT = 120;
-    const src = (i: number) => `/frames/hero/f_${String(i + 1).padStart(3, "0")}.jpg`;
+    const src = (i: number) => `${baseUrl}frames/hero/f_${String(i + 1).padStart(3, "0")}.jpg`;
     const images: (HTMLImageElement | null)[] = new Array(FRAME_COUNT).fill(null);
     let current = 0;
     let disposed = false;
@@ -251,7 +251,7 @@ export default function App() {
       st.kill();
       window.removeEventListener("resize", onResize);
     };
-  }, [reduced]);
+  }, [reduced, baseUrl]);
 
   // Space Chapter Video scale and parallax effect
   useEffect(() => {
