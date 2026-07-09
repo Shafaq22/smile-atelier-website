@@ -1,5 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400;1,600&display=swap');
 @import "tailwindcss";
-
 @font-face { font-family: "SiteDisplay"; src: url("/fonts/display-500.woff2") format("woff2");
   font-weight: 500; font-style: normal; font-display: swap; }
 @font-face { font-family: "SiteDisplay"; src: url("/fonts/display-700.woff2") format("woff2");
@@ -41,4 +41,24 @@ body { background-color: #070B14 !important; color: #E6EDFA !important; margin: 
 }
 .sx-dust {
   animation: float-dust 18s infinite linear;
+}
+
+/* Creative luxury serif font */
+.font-creative {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+}
+
+/* Text Shimmer Effect */
+@keyframes sx-shine {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.sx-shimmer {
+  background: linear-gradient(90deg, #E6EDFA, #C8A96A, #E6EDFA);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: sx-shine 8s ease infinite;
 }

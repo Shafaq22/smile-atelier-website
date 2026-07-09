@@ -60,6 +60,50 @@ function PhoneFillButton({ label, tel }: { label: string; tel: string }) {
   );
 }
 
+// Custom Live Counting Up Counter component using GSAP ScrollTrigger
+interface CounterProps {
+  end: number;
+  decimals?: number;
+  suffix?: string;
+  padZero?: boolean;
+}
+
+function Counter({ end, decimals = 0, suffix = "", padZero = false }: CounterProps) {
+  const [value, setValue] = useState(0);
+  const elementRef = useRef<HTMLSpanElement | null>(null);
+
+  useEffect(() => {
+    const el = elementRef.current;
+    if (!el) return;
+
+    const obj = { val: 0 };
+    const tween = gsap.to(obj, {
+      val: end,
+      duration: 1.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 95%",
+        toggleActions: "play none none none"
+      },
+      onUpdate: () => {
+        setValue(obj.val);
+      }
+    });
+
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+    };
+  }, [end]);
+
+  const formatted = value.toFixed(decimals);
+  const displayVal = padZero ? formatted.padStart(2, '0') : formatted;
+
+  return <span ref={elementRef}>{displayVal}{suffix}</span>;
+}
+
+
 export default function App() {
   const [reduced, setReduced] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
@@ -79,6 +123,9 @@ export default function App() {
 
   // Custom Gem Image Ref
   const gemImageRef = useRef<HTMLImageElement | null>(null);
+
+  // Manifesto Section Ref
+  const manifestoRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     // Detect reduced motion settings
@@ -290,6 +337,36 @@ export default function App() {
     return () => {
       scaleTween.scrollTrigger?.kill();
       scaleTween.kill();
+    };
+  }, [reduced]);
+
+  // Manifesto Section Scroll Animation
+  useEffect(() => {
+    if (reduced) return;
+    const target = manifestoRef.current;
+    if (!target) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const revealTween = gsap.fromTo(target,
+      { opacity: 0, scale: 0.95, y: 35 },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: target,
+          start: "top 85%",
+          toggleActions: "play none none none"
+        }
+      }
+    );
+
+    return () => {
+      revealTween.scrollTrigger?.kill();
+      revealTween.kill();
     };
   }, [reduced]);
 
@@ -534,19 +611,27 @@ export default function App() {
             <div className="mx-auto max-w-[1360px] px-5 md:px-10">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-siteink/10">
                 <div className="text-center px-4">
-                  <span className="font-display text-[32px] md:text-[44px] font-bold text-siteaccent">99.8%</span>
+                  <span className="font-display text-[32px] md:text-[44px] font-bold text-siteaccent">
+                    <Counter end={99.8} decimals={1} suffix="%" />
+                  </span>
                   <p className="mt-1 font-body text-[12px] md:text-[13px] text-sitemuted uppercase tracking-wider">Client Satisfaction</p>
                 </div>
                 <div className="text-center px-4">
-                  <span className="font-display text-[32px] md:text-[44px] font-bold text-siteaccent">12k+</span>
+                  <span className="font-display text-[32px] md:text-[44px] font-bold text-siteaccent">
+                    <Counter end={12} decimals={0} suffix="k+" />
+                  </span>
                   <p className="mt-1 font-body text-[12px] md:text-[13px] text-sitemuted uppercase tracking-wider">Veneers Completed</p>
                 </div>
                 <div className="text-center px-4">
-                  <span className="font-display text-[32px] md:text-[44px] font-bold text-siteaccent">15Yr+</span>
+                  <span className="font-display text-[32px] md:text-[44px] font-bold text-siteaccent">
+                    <Counter end={15} decimals={0} suffix="Yr+" />
+                  </span>
                   <p className="mt-1 font-body text-[12px] md:text-[13px] text-sitemuted uppercase tracking-wider">Avg Restoration Life</p>
                 </div>
                 <div className="text-center px-4">
-                  <span className="font-display text-[32px] md:text-[44px] font-bold text-siteaccent">03</span>
+                  <span className="font-display text-[32px] md:text-[44px] font-bold text-siteaccent">
+                    <Counter end={3} decimals={0} padZero={true} />
+                  </span>
                   <p className="mt-1 font-body text-[12px] md:text-[13px] text-sitemuted uppercase tracking-wider">Beverly Hills Accreditations</p>
                 </div>
               </div>
@@ -579,10 +664,10 @@ export default function App() {
             <div className="sticky top-0 h-dvh overflow-hidden bg-siteground">
               <div ref={chapterVideoRef} className="absolute inset-0 h-full w-full origin-center">
                 <FilmVideo
-                  src="/assets/film-atelier.mp4"
-                  poster="/assets/poster-atelier.jpg"
+                  src="/assets/sanctuary.mp4"
+                  poster="/assets/sanctuary-poster.jpg"
                   className="h-full w-full object-cover"
-                  label="Private black marble dental corridor swept by champagne light"
+                  label="Advanced sensory clinic treatment room"
                 />
               </div>
               
@@ -612,11 +697,7 @@ export default function App() {
 
               {/* Card Container Overlay (Axis 4: rounded-2xl glass) */}
               <div className="absolute inset-0 flex items-center justify-end px-5 md:px-10">
-                <div
-                  onMouseMove={handleMouseMove}
-                  onMouseLeave={handleMouseLeave}
-                  className="max-w-md rounded-2xl border border-siteink/10 bg-sitesurface/75 p-8 shadow-2xl backdrop-blur-md transition-all duration-300 ease-out"
-                >
+                <div className="max-w-md rounded-2xl border border-siteink/10 bg-sitesurface/75 p-8 shadow-2xl backdrop-blur-md">
                   <span className="font-display text-[11px] font-bold tracking-[0.25em] text-siteaccent uppercase">
                     THE SPACE
                   </span>
@@ -852,9 +933,9 @@ export default function App() {
           {/* SECTION 7: LEGACY STATEMENT (Centered Manifesto) */}
           <section className="relative py-24 md:py-32">
             <div className="mx-auto max-w-[1360px] px-5 md:px-10 text-center">
-              <div className="sx-wash mx-auto inline-block rounded-2xl border border-siteaccent/10 px-8 py-12 shadow-inner">
-                <p className="font-display text-[28px] font-bold tracking-tight text-siteink md:text-[46px] uppercase">
-                  We do not place teeth. <span className="text-siteaccent">We restore character.</span>
+              <div ref={manifestoRef} className="sx-wash mx-auto inline-block rounded-2xl border border-siteaccent/10 px-10 py-14 shadow-2xl backdrop-blur-sm">
+                <p className="font-creative text-[32px] md:text-[54px] font-light tracking-wide sx-shimmer leading-tight capitalize">
+                  Designed with precision. <span className="block md:inline font-normal text-siteaccent">Delivered with care.</span>
                 </p>
               </div>
             </div>
