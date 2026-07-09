@@ -105,6 +105,7 @@ function Counter({ end, decimals = 0, suffix = "", padZero = false }: CounterPro
 
 
 export default function App() {
+  const baseUrl = import.meta.env.BASE_URL;
   const [reduced, setReduced] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -526,7 +527,7 @@ export default function App() {
           {reduced ? (
             <section className="relative h-dvh overflow-hidden bg-siteground">
               <img
-                src="/assets/hero-final.jpg"
+                src={baseUrl + "assets/hero-final.jpg"}
                 alt="Awakened veneer on onyx marble plinth with champagne gold highlights"
                 className="absolute inset-0 h-full w-full object-cover"
               />
@@ -597,7 +598,7 @@ export default function App() {
             <div className="mx-auto max-w-[1360px] px-5 md:px-10">
               <div className="overflow-hidden rounded-2xl border border-siteink/10 bg-sitesurface shadow-xl relative group">
                 <img
-                  src="/assets/aurora-banner.png"
+                  src={baseUrl + "assets/aurora-banner.png"}
                   alt="Aurora Dental Aesthetics - Redefining Smiles, Elevating Confidence"
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02] origin-center"
                 />
@@ -664,8 +665,8 @@ export default function App() {
             <div className="sticky top-0 h-dvh overflow-hidden bg-siteground">
               <div ref={chapterVideoRef} className="absolute inset-0 h-full w-full origin-center">
                 <FilmVideo
-                  src="/assets/sanctuary.mp4"
-                  poster="/assets/sanctuary-poster.jpg"
+                  src={baseUrl + "assets/sanctuary.mp4"}
+                  poster={baseUrl + "assets/sanctuary-poster.jpg"}
                   className="h-full w-full object-cover"
                   label="Advanced sensory clinic treatment room"
                 />
@@ -836,7 +837,7 @@ export default function App() {
                 >
                   <img
                     ref={gemImageRef}
-                    src="/assets/custom-gem.jpg"
+                    src={baseUrl + "assets/custom-gem.jpg"}
                     alt="Master ceramist hands refining a porcelain veneer clamped in a jewel vise under precise light"
                     className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-105 origin-center"
                   />
@@ -874,8 +875,8 @@ export default function App() {
 
               <div ref={artistryVideoRef} className="absolute inset-0 h-full w-full origin-center">
                 <FilmVideo
-                  src="/assets/teeth.mp4"
-                  poster="/assets/teeth-poster.jpg"
+                  src={baseUrl + "assets/teeth.mp4"}
+                  poster={baseUrl + "assets/teeth-poster.jpg"}
                   className="h-full w-full object-cover"
                   label="Advanced dental artistry veneers demonstration"
                 />
@@ -994,8 +995,8 @@ export default function App() {
             {/* Full-bleed background video */}
             <div className="absolute inset-0 h-full w-full">
               <FilmVideo
-                src="/assets/film-nocturne.mp4"
-                poster="/assets/poster-nocturne.jpg"
+                src={baseUrl + "assets/film-nocturne.mp4"}
+                poster={baseUrl + "assets/poster-nocturne.jpg"}
                 className="h-full w-full object-cover"
                 label="Open veneer presentation case glowing under brass lamp in dim atelier room"
               />
