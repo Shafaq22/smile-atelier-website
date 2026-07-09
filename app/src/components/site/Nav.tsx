@@ -14,7 +14,7 @@ export function Nav() {
       solid ? "sx-hairline bg-sitesurface/85 backdrop-blur-md" : "border-transparent bg-transparent"}`}>
       <div className="mx-auto flex h-16 w-full max-w-[1360px] items-center justify-between px-5 md:px-10">
         <a href="/" className="flex items-center gap-3" aria-label="Aurora Dental Aesthetics, home">
-          <img src="/assets/logo.png" alt="" width={30} height={30} className="h-[30px] w-[30px]" />
+          <img src="assets/logo.png" alt="" width={30} height={30} className="h-[30px] w-[30px]" />
           <span className="font-display text-[16px] font-bold tracking-tight text-siteink">Aurora Dental Aesthetics</span>
         </a>
         {/* Section Navigation Links (Desktop Centered) */}
