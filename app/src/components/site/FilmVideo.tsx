@@ -11,5 +11,5 @@ export function FilmVideo({ src, poster, className, label }:
     io.observe(v); return () => io.disconnect();
   }, []);
   return <video ref={ref} className={className} src={src} poster={poster}
-    muted loop playsInline preload="metadata" aria-label={label} />;
+    autoPlay muted loop playsInline preload="metadata" aria-label={label} />;
 }
